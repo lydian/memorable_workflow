@@ -37,9 +37,9 @@ class MemorableWorkflow(object):
         # the list of results for Alfred
         if query:
             rows = self.wf.filter(
-                query, data['rows'], key=itemgetter(0), min_score=20)
+                query, data['data'], key=itemgetter(0), min_score=20)
         else:
-            rows = data.get('recent', []) + data['rows']
+            rows = data.get('recent', []) + data['data']
 
         default_item = {'icon': ICON_WEB, 'valid': True}
         for row in rows[:10]:
@@ -53,7 +53,7 @@ class MemorableWorkflow(object):
 
     def log_recent_selections(self, selected_url, data):
         selected = filter(
-            lambda (name, url): url == selected_url, data['rows'])
+            lambda (name, url): url == selected_url, data['data'])
         if len(selected) > 0 and selcted[0] not in data.get('recent', []):
             data['recent'] = [selected[0]] + data.get('recent', [])
         data['recent'] = data['recent'][:10]
